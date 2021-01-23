@@ -7,6 +7,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 6.0f;
     [SerializeField]
+    private float _thrusterSpeedIncreaseForLeftShift = 4.0f;
+
+    [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleLaserPrefab;
@@ -22,7 +25,8 @@ public class Player : MonoBehaviour
     private bool _isTripleShotActive = false;
 
     private bool _isSpeedBoostActive = false;
-    private float _speedMultiplier = 2.0f;
+    [SerializeField]
+    private float _speedBoostMultiplier = 2.0f;
 
     private bool _isShieldActive = false;
 
@@ -87,9 +91,15 @@ public class Player : MonoBehaviour
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
         float effectiveSpeed = _speed;
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            effectiveSpeed += _thrusterSpeedIncreaseForLeftShift;
+        }
+
         if (_isSpeedBoostActive)
         {
-            effectiveSpeed *= _speedMultiplier;
+            effectiveSpeed *= _speedBoostMultiplier;
         }
 
         transform.Translate(direction * effectiveSpeed * Time.deltaTime);
