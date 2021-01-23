@@ -24,6 +24,12 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Indicator _shieldIndicator;
 
+    [SerializeField]
+    private Indicator _ammoIndicator;
+    [SerializeField]
+    private Text _ammoLabel;
+
+
     void Start()
     {
 
@@ -80,5 +86,12 @@ public class UIManager : MonoBehaviour
     public void ShowShieldIndicator(bool show)
     {
         _shieldIndicator.ShowIndicator(show);
+    }
+
+    public void SetAmmoIndicator(int current, int max)
+    {
+        _ammoLabel.text = "Ammo: " + current + "/" + max;
+        _ammoIndicator.Percentage = (float)current / max;
+
     }
 }

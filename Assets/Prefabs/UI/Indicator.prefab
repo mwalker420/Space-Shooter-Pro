@@ -50,7 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 389df95872d224d1da4cbb6a2bb70159, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _indicatorForground: {fileID: 7849966041674749222}
+  _indicatorForgroundObject: {fileID: 7849966041674749222}
+  _indicatorBackgroundObject: {fileID: 4162623153082841753}
 --- !u!1 &4162623153082841753
 GameObject:
   m_ObjectHideFlags: 0

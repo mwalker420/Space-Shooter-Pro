@@ -48,6 +48,13 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _laserSoundClip;
 
+    [SerializeField]
+    private AudioClip _failedLaserClip;
+
+    [SerializeField]
+    private int _maxAmmoCount = 15;
+    private int _currentAmmoCount;
+
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
@@ -76,6 +83,9 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Hey, don't forget to assign the shields in the Inspector");
         }
+
+        _currentAmmoCount = _maxAmmoCount;
+        _uiManager.SetAmmoIndicator(_currentAmmoCount, _maxAmmoCount);
 
     }
 
@@ -125,14 +135,26 @@ public class Player : MonoBehaviour
     {
         _canFire = Time.time + _fireRate;
 
-        if (_isTripleShotActive)
+        if (_currentAmmoCount > 0)
         {
-            Instantiate(_tripleLaserPrefab, transform.position, Quaternion.identity);
+            if (_isTripleShotActive)
+            {
+                Instantiate(_tripleLaserPrefab, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.96f, 0), Quaternion.identity);
+            }
+            _currentAmmoCount--; // triple shot only counts one against ammo count.
+            _audioSource.PlayOneShot(_laserSoundClip);
+            _uiManager.SetAmmoIndicator(_currentAmmoCount, _maxAmmoCount);
         }
         else
         {
-            Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.96f, 0), Quaternion.identity);
+            Debug.Log("Out of ammo");
+            _audioSource.PlayOneShot(_failedLaserClip);
         }
+
 
     }
 
@@ -206,6 +228,6 @@ public class Player : MonoBehaviour
         _uiManager.UpdateScore(_score);
     }
 
-    
+
 
 }
