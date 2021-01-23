@@ -77,6 +77,7 @@ public class Enemy : MonoBehaviour
             _anim.SetTrigger("OnEnemyDeath");
             _speed = 0;
             _audioManager.PlayExplosion();
+            StopAllCoroutines(); //don't want enemy to get any shots off if destroyed
             Destroy(gameObject, 2.8f);
         }
 
@@ -92,6 +93,7 @@ public class Enemy : MonoBehaviour
             _audioManager.PlayExplosion();
             Destroy(GetComponent<Collider2D>());
             Destroy(other.gameObject);
+            StopAllCoroutines(); //don't want enemy to get any shots off if destroyed
             Destroy(gameObject, 2.8f);
         }
     }

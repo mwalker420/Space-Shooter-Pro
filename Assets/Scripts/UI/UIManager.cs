@@ -21,6 +21,9 @@ public class UIManager : MonoBehaviour
 
     private GameManager _gameManager;
 
+    [SerializeField]
+    private Indicator _shieldIndicator;
+
     void Start()
     {
 
@@ -32,6 +35,8 @@ public class UIManager : MonoBehaviour
         {
             Debug.LogError("GameManager is NULL.");
         }
+
+        _shieldIndicator.ShowIndicator(false);
     }
 
     public void UpdateScore(int score)
@@ -65,5 +70,15 @@ public class UIManager : MonoBehaviour
             show = !show;
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    public void SetShieldStrength(float strength)
+    {
+        _shieldIndicator.Percentage = strength;
+    }
+
+    public void ShowShieldIndicator(bool show)
+    {
+        _shieldIndicator.ShowIndicator(show);
     }
 }

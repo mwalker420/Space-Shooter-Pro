@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Player : MonoBehaviour
 {
     [SerializeField]
@@ -28,10 +29,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speedBoostMultiplier = 2.0f;
 
-    private bool _isShieldActive = false;
-
     [SerializeField]
-    private GameObject _shieldVisualizer;
+    private Shields _shields;
+
     [SerializeField]
     GameObject _rightEngineFlame;
     [SerializeField]
@@ -70,6 +70,11 @@ public class Player : MonoBehaviour
         if (_audioSource == null)
         {
             Debug.LogError("AudioSource on the player is NULL.");
+        }
+
+        if (_shields == null)
+        {
+            Debug.LogError("Hey, don't forget to assign the shields in the Inspector");
         }
 
     }
@@ -131,15 +136,13 @@ public class Player : MonoBehaviour
 
     }
 
+
+
     public void Damage()
     {
-        if (_isShieldActive)
+        if (_shields.ShieldIsActive)
         {
-            _isShieldActive = false;
-            if (_shieldVisualizer != null)
-            {
-                _shieldVisualizer.SetActive(false);
-            }
+            _shields.HandleShieldHit();
             return;
         }
 
@@ -194,13 +197,7 @@ public class Player : MonoBehaviour
 
     public void EnableShield()
     {
-
-        _isShieldActive = true;
-        if (_shieldVisualizer != null)
-        {
-            _shieldVisualizer.SetActive(true);
-        }
-
+        _shields.EnableShield();
     }
 
     public void AddScore(int score)
