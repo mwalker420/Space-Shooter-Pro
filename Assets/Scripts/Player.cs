@@ -17,8 +17,20 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
+
+    private int _maxLives = 3; //
     [SerializeField]
     private int _lives = 3;
+    private int Lives
+    {
+        get { return _lives; }
+        set
+        {
+            _lives = Mathf.Min(value, _maxLives);
+            _uiManager.UpdateLives(_lives);
+            RenderShipHealth();
+        }
+    }
 
     private SpawnManager _spawnManager;
 
@@ -97,7 +109,7 @@ public class Player : MonoBehaviour
         }
 
         CurrentAmmoCount = _maxAmmoCount;
-        
+
 
     }
 
@@ -170,7 +182,21 @@ public class Player : MonoBehaviour
 
     }
 
+    private void RenderShipHealth()
+    {
+        _rightEngineFlame.SetActive(false);
+        _leftEngineFlame.SetActive(false);
 
+        if (Lives == 2)
+        {
+            _rightEngineFlame.SetActive(true);
+        }
+
+        if (Lives == 1)
+        {
+            _leftEngineFlame.SetActive(true);
+        }
+    }
 
     public void Damage()
     {
@@ -180,21 +206,9 @@ public class Player : MonoBehaviour
             return;
         }
 
-        _lives--;
+        Lives--;
 
-        if (_lives == 2)
-        {
-            _rightEngineFlame.SetActive(true);
-        }
-
-        if (_lives == 1)
-        {
-            _leftEngineFlame.SetActive(true);
-        }
-
-        _uiManager.UpdateLives(_lives);
-
-        if (_lives < 1)
+        if (Lives < 1)
         {
             if (_spawnManager != null)
             {
@@ -243,6 +257,11 @@ public class Player : MonoBehaviour
     public void ReplenishAmmo()
     {
         CurrentAmmoCount = _maxAmmoCount;
+    }
+
+    public void IncreaseHealth()
+    {
+        Lives++;
     }
 
 

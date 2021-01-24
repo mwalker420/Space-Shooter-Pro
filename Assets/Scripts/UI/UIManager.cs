@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateLives(int currentLives)
     {
-        _LivesImg.sprite = _liveSprites[Mathf.Clamp(currentLives, 0, 2)];
+        _LivesImg.sprite = _liveSprites[Mathf.Clamp(currentLives, 0, 3)];
         if (currentLives <= 0)
         {
             GameOverSequence();
