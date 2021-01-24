@@ -17,11 +17,6 @@ public class SpawnManager : MonoBehaviour
     private bool _stopSpawning = false;
 
 
-    void Start()
-    {
-        
-    }
-
     public void StartSpawning()
     {
         StartCoroutine(SpawnEnemyRoutine());
@@ -47,7 +42,7 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-9f, 9.0f), 8f, 0);
-            int randomPowerUp = Random.Range(0, 3);
+            int randomPowerUp = Random.Range(0, _powerups.Length);
             GameObject newPowerup = Instantiate(_powerups[randomPowerUp], posToSpawn, Quaternion.identity);
 
             newPowerup.transform.parent = transform;

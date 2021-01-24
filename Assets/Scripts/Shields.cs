@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Shields : MonoBehaviour
 {
-    [SerializeField]
     private SpriteRenderer _shieldVisualizer;
 
     [SerializeField]
@@ -34,10 +33,11 @@ public class Shields : MonoBehaviour
     void Start()
     {
         _shieldVisualizer = GetComponent<SpriteRenderer>();
-        if (_shieldVisualizer != null)
+        if (_shieldVisualizer == null)
         {
-            _shieldVisualizer.enabled = false;
+            Debug.LogError("Shield SpriteRenderer is NULL.");
         }
+        _shieldVisualizer.enabled = false;
 
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         if (_uiManager == null)

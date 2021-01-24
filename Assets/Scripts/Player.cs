@@ -54,6 +54,18 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _maxAmmoCount = 15;
     private int _currentAmmoCount;
+    private int CurrentAmmoCount
+    {
+        get
+        {
+            return _currentAmmoCount;
+        }
+        set
+        {
+            _currentAmmoCount = value;
+            _uiManager.SetAmmoIndicator(_currentAmmoCount, _maxAmmoCount);
+        }
+    }
 
     void Start()
     {
@@ -84,8 +96,8 @@ public class Player : MonoBehaviour
             Debug.LogError("Hey, don't forget to assign the shields in the Inspector");
         }
 
-        _currentAmmoCount = _maxAmmoCount;
-        _uiManager.SetAmmoIndicator(_currentAmmoCount, _maxAmmoCount);
+        CurrentAmmoCount = _maxAmmoCount;
+        
 
     }
 
@@ -135,7 +147,7 @@ public class Player : MonoBehaviour
     {
         _canFire = Time.time + _fireRate;
 
-        if (_currentAmmoCount > 0)
+        if (CurrentAmmoCount > 0)
         {
             if (_isTripleShotActive)
             {
@@ -145,9 +157,9 @@ public class Player : MonoBehaviour
             {
                 Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.96f, 0), Quaternion.identity);
             }
-            _currentAmmoCount--; // triple shot only counts one against ammo count.
+            CurrentAmmoCount--; // triple shot only counts one against ammo count.
             _audioSource.PlayOneShot(_laserSoundClip);
-            _uiManager.SetAmmoIndicator(_currentAmmoCount, _maxAmmoCount);
+
         }
         else
         {
@@ -226,6 +238,11 @@ public class Player : MonoBehaviour
     {
         _score += score;
         _uiManager.UpdateScore(_score);
+    }
+
+    public void ReplenishAmmo()
+    {
+        CurrentAmmoCount = _maxAmmoCount;
     }
 
 
