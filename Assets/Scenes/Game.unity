@@ -153,12 +153,25 @@ MonoBehaviour:
   _enemyPrefab: {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18,
     type: 3}
   _enemyContainer: {fileID: 883360596}
-  _powerups:
-  - {fileID: 2667368668141772946, guid: 8c3f1cfcfa127476dac071a90174b246, type: 3}
-  - {fileID: 1586064779241572466, guid: f148512c2bd79412c8e678579498af7c, type: 3}
-  - {fileID: 1085125274983362734, guid: 85b04a09e98ea4a628e90273ccccf0ad, type: 3}
-  - {fileID: 1085125274983362734, guid: 62cca7ec09c414282832c1f6a07318ad, type: 3}
-  - {fileID: 1085125274983362734, guid: 141db5c4452844b26985a4afa5f5da60, type: 3}
+  _powerupEntries:
+  - powerUp: {fileID: 1085125274983362734, guid: 62cca7ec09c414282832c1f6a07318ad,
+      type: 3}
+    spawnWeight: 3
+  - powerUp: {fileID: 1085125274983362734, guid: 141db5c4452844b26985a4afa5f5da60,
+      type: 3}
+    spawnWeight: 2
+  - powerUp: {fileID: 1085125274983362734, guid: 5e0e1e70a387d468eb7220276ead5f25,
+      type: 3}
+    spawnWeight: 1
+  - powerUp: {fileID: 1085125274983362734, guid: 85b04a09e98ea4a628e90273ccccf0ad,
+      type: 3}
+    spawnWeight: 2
+  - powerUp: {fileID: 2667368668141772946, guid: 8c3f1cfcfa127476dac071a90174b246,
+      type: 3}
+    spawnWeight: 2
+  - powerUp: {fileID: 1586064779241572466, guid: f148512c2bd79412c8e678579498af7c,
+      type: 3}
+    spawnWeight: 2
   _waitTime: 5
 --- !u!4 &40157837
 Transform:
@@ -274,7 +287,7 @@ PrefabInstance:
     - target: {fileID: 6874740920974862487, guid: 57f4a9ce412dd4a6298417cd9f0f7f47,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6874740920974862487, guid: 57f4a9ce412dd4a6298417cd9f0f7f47,
         type: 3}
@@ -1428,7 +1441,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1278280953
 GameObject:
@@ -1494,7 +1507,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1393333749
 GameObject:
@@ -2096,9 +2109,12 @@ MonoBehaviour:
     type: 3}
   _tripleLaserPrefab: {fileID: 2662675354964150214, guid: 66dd1ec6125a245e598d0a220619fa9c,
     type: 3}
+  _missilePrefab: {fileID: 7856113062391973639, guid: e9be7c6f509c446718158ba705175064,
+    type: 3}
   _fireRate: 0.15
   _lives: 3
   _isTripleShotActive: 0
+  _isMissileActive: 0
   _speedBoostMultiplier: 2
   _shields: {fileID: 1831064810}
   _rightEngineFlame: {fileID: 1410067916}
@@ -2107,6 +2123,7 @@ MonoBehaviour:
   _laserSoundClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _failedLaserClip: {fileID: 8300000, guid: 724131bc8a7f34041bb9f1701f0cb58d, type: 3}
   _maxAmmoCount: 15
+  _replenishAmmoOnEnableMissiles: 0
 --- !u!212 &2123133643
 SpriteRenderer:
   m_ObjectHideFlags: 0

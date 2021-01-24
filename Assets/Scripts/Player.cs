@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleLaserPrefab;
     [SerializeField]
+    private GameObject _missilePrefab;
+
+    [SerializeField]
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
 
@@ -36,6 +39,9 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private bool _isTripleShotActive = false;
+
+    [SerializeField]
+    private bool _isMissileActive = false;
 
     private bool _isSpeedBoostActive = false;
     [SerializeField]
@@ -65,6 +71,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private int _maxAmmoCount = 15;
+    [SerializeField]
+    private bool _replenishAmmoOnEnableMissiles;
     private int _currentAmmoCount;
     private int CurrentAmmoCount
     {
@@ -161,7 +169,11 @@ public class Player : MonoBehaviour
 
         if (CurrentAmmoCount > 0)
         {
-            if (_isTripleShotActive)
+            if (_isMissileActive)
+            {
+                Instantiate(_missilePrefab, transform.position, Quaternion.identity);
+            }
+            else if (_isTripleShotActive)
             {
                 Instantiate(_tripleLaserPrefab, transform.position, Quaternion.identity);
             }
@@ -175,7 +187,6 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log("Out of ammo");
             _audioSource.PlayOneShot(_failedLaserClip);
         }
 
@@ -221,6 +232,7 @@ public class Player : MonoBehaviour
 
     public void EnableTripleShot()
     {
+        //Debug.Log("Player::EnableTripleShot");
         _isTripleShotActive = true;
         StartCoroutine(TripleShotPowerDownRoutine());
     }
@@ -233,6 +245,7 @@ public class Player : MonoBehaviour
 
     public void EnableSpeedBoost()
     {
+        //Debug.Log("Player::EnableSpeedBoost");
         _isSpeedBoostActive = true;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
@@ -245,6 +258,7 @@ public class Player : MonoBehaviour
 
     public void EnableShield()
     {
+        //Debug.Log("Player::EnableShield");
         _shields.EnableShield();
     }
 
@@ -256,12 +270,31 @@ public class Player : MonoBehaviour
 
     public void ReplenishAmmo()
     {
+        //Debug.Log("Player::ReplenishAmmo");
         CurrentAmmoCount = _maxAmmoCount;
     }
 
     public void IncreaseHealth()
     {
         Lives++;
+    }
+
+    public void EnableMissiles()
+    {
+        //Debug.Log("Player::Enable Missiles");
+        _isMissileActive = true;
+        StartCoroutine(MissilePowerDown());
+        if (_replenishAmmoOnEnableMissiles)
+        {
+            ReplenishAmmo();
+        }
+
+    }
+
+    IEnumerator MissilePowerDown()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isMissileActive = false;
     }
 
 
