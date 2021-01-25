@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
 
+    #region Lives
     private int _maxLives = 3; //
     [SerializeField]
     private int _lives = 3;
@@ -34,6 +35,7 @@ public class Player : MonoBehaviour
             RenderShipHealth();
         }
     }
+    #endregion Lives
 
     private SpawnManager _spawnManager;
 
@@ -69,6 +71,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _failedLaserClip;
 
+    #region Ammo
     [SerializeField]
     private int _maxAmmoCount = 15;
     [SerializeField]
@@ -86,6 +89,32 @@ public class Player : MonoBehaviour
             _uiManager.SetAmmoIndicator(_currentAmmoCount, _maxAmmoCount);
         }
     }
+    #endregion Ammo
+
+    #region Thrusters
+    [SerializeField]
+    private int _maxThrusterValue = 60;
+    private int _currentThrusterValue;
+    private int CurrentThrusterValue
+    {
+        get { return _currentThrusterValue; }
+        set
+        {
+            if (value >= 0 && value <= _maxThrusterValue)
+            {
+                _currentThrusterValue = value;
+                _uiManager.SetThrusterIndicator(_currentThrusterValue, _maxThrusterValue);
+            }
+        }
+    }
+
+    [SerializeField]
+    private float _thrusterReplenishStartDelay = 2.0f;
+    [SerializeField]
+    private float _thrusterReplenishRate = 0.3f;
+    private bool _thrusterReplenishIsActive = false;
+
+    #endregion Thrusters
 
     void Start()
     {
@@ -117,6 +146,7 @@ public class Player : MonoBehaviour
         }
 
         CurrentAmmoCount = _maxAmmoCount;
+        CurrentThrusterValue = _maxThrusterValue;
 
 
     }
@@ -127,6 +157,39 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             FireLaser();
+        }
+        ReplenishThrusters();
+    }
+
+    void ReplenishThrusters()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (_thrusterReplenishIsActive)
+            {
+                _thrusterReplenishIsActive = false;
+                StopCoroutine("ReplenishThrustersRoutine");
+            }
+
+        }
+        else if (!_thrusterReplenishIsActive)
+        {
+            _thrusterReplenishIsActive = true;
+            StartCoroutine("ReplenishThrustersRoutine");
+        }
+    }
+
+    IEnumerator ReplenishThrustersRoutine()
+    {
+        yield return new WaitForSeconds(_thrusterReplenishStartDelay);
+        while (true)
+        {
+            yield return new WaitForSeconds(_thrusterReplenishRate);
+            CurrentThrusterValue++;
+            if (CurrentThrusterValue >= _maxThrusterValue)
+            {
+                break;
+            }
         }
     }
 
@@ -139,9 +202,10 @@ public class Player : MonoBehaviour
 
         float effectiveSpeed = _speed;
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && CurrentThrusterValue > 0)
         {
             effectiveSpeed += _thrusterSpeedIncreaseForLeftShift;
+            CurrentThrusterValue--;
         }
 
         if (_isSpeedBoostActive)

@@ -45,8 +45,6 @@ public class SpawnManager : MonoBehaviour
             }
         }
         _weightedSpawnTotal = _weightedIndexLookupList.Count;
-
-        Debug.Log("_weightedSpawnTotal: " + _weightedSpawnTotal);
     }
 
     public void StartSpawning()
@@ -79,7 +77,6 @@ public class SpawnManager : MonoBehaviour
             int powerUpIndex = _weightedIndexLookupList[randomWeightedIndex];
 
             GameObject newPowerup = Instantiate(_powerupEntries[powerUpIndex].powerUp, posToSpawn, Quaternion.identity);
-            Debug.Log("Spawning Powerup: " + newPowerup.name);
 
             newPowerup.transform.parent = transform;
             yield return new WaitForSeconds(Random.Range(3, 8));
