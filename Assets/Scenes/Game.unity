@@ -931,6 +931,7 @@ GameObject:
   - component: {fileID: 582615227}
   - component: {fileID: 582615226}
   - component: {fileID: 582615229}
+  - component: {fileID: 582615230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1063,6 +1064,22 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &582615230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582615225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5634a07ebccdf48669dc015d5363db56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shakeDuration: 0.2
+  _currentShakeDuration: 0
+  _speed: 1
+  _shakeMagnitude: 0.1
 --- !u!1 &660874577 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7849966041674749222, guid: 985d49bc2af8b48da873fe63367dfa82,
@@ -2356,9 +2373,13 @@ MonoBehaviour:
   _score: 0
   _laserSoundClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _failedLaserClip: {fileID: 8300000, guid: 724131bc8a7f34041bb9f1701f0cb58d, type: 3}
+  _explosionClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _maxAmmoCount: 15
   _replenishAmmoOnEnableMissiles: 0
   _maxThrusterValue: 60
+  _thrusterReplenishStartDelay: 2
+  _thrusterReplenishRate: 0.3
+  _mainCamera: {fileID: 0}
 --- !u!212 &2123133643
 SpriteRenderer:
   m_ObjectHideFlags: 0

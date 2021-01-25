@@ -62,6 +62,8 @@ public class Player : MonoBehaviour
 
     private UIManager _uiManager;
 
+    #region Audio
+
     //var to store audio clip
     private AudioSource _audioSource;
 
@@ -70,6 +72,10 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private AudioClip _failedLaserClip;
+
+    [SerializeField]
+    private AudioClip _explosionClip;
+    #endregion Audio
 
     #region Ammo
     [SerializeField]
@@ -116,6 +122,9 @@ public class Player : MonoBehaviour
 
     #endregion Thrusters
 
+    [SerializeField]
+    private MainCamera _mainCamera;
+
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
@@ -147,6 +156,14 @@ public class Player : MonoBehaviour
 
         CurrentAmmoCount = _maxAmmoCount;
         CurrentThrusterValue = _maxThrusterValue;
+
+
+        _mainCamera = GameObject.Find("Main Camera").GetComponent<MainCamera>();
+        if (_mainCamera == null)
+        {
+            Debug.LogError("Main Camera reference is NULL");
+        }
+
 
 
     }
@@ -282,6 +299,7 @@ public class Player : MonoBehaviour
         }
 
         Lives--;
+        _mainCamera.TriggerShake();
 
         if (Lives < 1)
         {
@@ -289,8 +307,10 @@ public class Player : MonoBehaviour
             {
                 _spawnManager.OnPlayerDeath();
             }
-
-            Destroy(gameObject);
+            // adding sound here when the play dies for some kind of feedback.
+            // would be even better if we had an explosion too.
+            _audioSource.PlayOneShot(_explosionClip);
+            Destroy(gameObject, 1.0f);
         }
     }
 
