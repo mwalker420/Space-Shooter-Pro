@@ -26,6 +26,8 @@ public class SpawnManager : MonoBehaviour
 
     private bool _stopSpawning = false;
 
+    public float advancedMovementProbability = 0.3f;
+
     private void Start()
     {
         BuildWeightedLookupTable();
@@ -61,6 +63,8 @@ public class SpawnManager : MonoBehaviour
             Vector3 posToSpawn = new Vector3(Random.Range(-9.0f, 9.0f), 8f, 0);
 
             GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
+            bool useAdvancedMovement = Random.value <= advancedMovementProbability;
+            newEnemy.GetComponent<Enemy>().useAdvancedMovement = useAdvancedMovement;
             newEnemy.transform.parent = _enemyContainer.transform;
             yield return new WaitForSeconds(_waitTime);
         }

@@ -15,6 +15,10 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab;
 
+    public bool useAdvancedMovement = false;
+    [SerializeField]
+    private Vector3 _advancedDirection = new Vector3(1, -1, 0);
+
 
     private void Start()
     {
@@ -42,7 +46,6 @@ public class Enemy : MonoBehaviour
 
     }
 
-    // TODO: fire lasers every 3-7 seconds
     IEnumerator FireLasers()
     {
         while (true)
@@ -54,14 +57,45 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        if (useAdvancedMovement)
+        {
+            AdvancedMovement();
+        }
+        else
+        {
+            RegularMovement();
+        }
 
+
+        // come back in at a random spot at the top
+        // if enemy made it to the bottom
         if (transform.position.y < -6.0f)
         {
             float randomX = Random.Range(-9.0f, 9.0f);
             transform.position = new Vector3(randomX, 8f, 0);
         }
 
+    }
+
+    private void RegularMovement()
+    {
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+    }
+
+    private void AdvancedMovement()
+    {
+        // move side to side
+
+        if (transform.position.x > 9f)
+        {
+            _advancedDirection.x *= -1f;
+        }
+        else if (transform.position.x < -9f)
+        {
+            _advancedDirection.x *= -1f;
+        }
+
+        transform.Translate(_advancedDirection * _speed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
