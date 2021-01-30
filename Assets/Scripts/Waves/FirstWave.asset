@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae9682068ddf544eb8acf09c131a8818, type: 3}
   m_Name: FirstWave
   m_EditorClassIdentifier: 
-  enemyCount: 3
+  enemies:
+  - {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18, type: 3}
+  - {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18, type: 3}
+  - {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18, type: 3}
   advancedMovementProbability: 0
   timeBetweenEnemies: 3

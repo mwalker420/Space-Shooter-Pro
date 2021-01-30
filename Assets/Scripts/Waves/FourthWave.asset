@@ -12,6 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae9682068ddf544eb8acf09c131a8818, type: 3}
   m_Name: FourthWave
   m_EditorClassIdentifier: 
-  enemyCount: 13
+  enemies:
+  - {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18, type: 3}
+  - {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18, type: 3}
+  - {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18, type: 3}
+  - {fileID: 6297184804970002370, guid: e2120d25c29ae48548908cdb3f2c0d32, type: 3}
+  - {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18, type: 3}
+  - {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18, type: 3}
+  - {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18, type: 3}
+  - {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18, type: 3}
+  - {fileID: 6297184804970002370, guid: e2120d25c29ae48548908cdb3f2c0d32, type: 3}
+  - {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18, type: 3}
+  - {fileID: 6297184804970002370, guid: e2120d25c29ae48548908cdb3f2c0d32, type: 3}
+  - {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18, type: 3}
+  - {fileID: 6297184804970002370, guid: e2120d25c29ae48548908cdb3f2c0d32, type: 3}
   advancedMovementProbability: 0.684
   timeBetweenEnemies: 1.49

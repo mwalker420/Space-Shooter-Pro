@@ -64,11 +64,11 @@ public class SpawnManager : MonoBehaviour
         {
             yield return new WaitForSeconds(_timeBetweenWaves);
 
-            for (int i = 0; i < wave.enemyCount; i++)
+            foreach (var enemy in wave.enemies)
             {
                 Vector3 posToSpawn = new Vector3(Random.Range(-9.0f, 9.0f), 8f, 0);
 
-                GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
+                GameObject newEnemy = Instantiate(enemy, posToSpawn, Quaternion.identity);
                 bool useAdvancedMovement = Random.value < wave.advancedMovementProbability;
                 newEnemy.GetComponent<Enemy>().useAdvancedMovement = useAdvancedMovement;
                 newEnemy.transform.parent = _enemyContainer.transform;

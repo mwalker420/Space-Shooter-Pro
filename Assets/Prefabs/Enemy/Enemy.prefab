@@ -51,6 +51,10 @@ MonoBehaviour:
   _speed: 4
   _laserPrefab: {fileID: 9042315578981844598, guid: 6a53fe4f2b2cf45319fc3428feab2db2,
     type: 3}
+  _empBlastPrefab: {fileID: 3412767028901779918, guid: fbbb7a45851b74f249e05356850c2bc2,
+    type: 3}
+  useAdvancedMovement: 0
+  _advancedDirection: {x: 1, y: -1, z: 0}
 --- !u!212 &3277869613919623476
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -5,7 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Wave1", menuName = "ScriptableObjects/Wave", order = 1)]
 public class WaveObject : ScriptableObject
 {
-    public int enemyCount;
+
+    public List<GameObject> enemies = new List<GameObject>();
 
     [Range(0, 1)]
     public float advancedMovementProbability;

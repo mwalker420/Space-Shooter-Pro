@@ -15,10 +15,15 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab;
 
+    [SerializeField]
+    private GameObject _empBlastPrefab;
+
     public bool useAdvancedMovement = false;
     [SerializeField]
     private Vector3 _advancedDirection = new Vector3(1, -1, 0);
 
+
+    public bool HasEMPWeapon;
 
     private void Start()
     {
@@ -51,7 +56,18 @@ public class Enemy : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(Random.Range(3f, 7f));
-            Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            if (HasEMPWeapon)
+            {
+                var blastRef = Instantiate(_empBlastPrefab, transform.position, Quaternion.identity);
+                blastRef.transform.parent = transform;
+            }
+            else
+            {
+                Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            }
+
+
+
         }
     }
 

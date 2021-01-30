@@ -156,7 +156,7 @@ MonoBehaviour:
   _powerupEntries:
   - powerUp: {fileID: 1085125274983362734, guid: 62cca7ec09c414282832c1f6a07318ad,
       type: 3}
-    spawnWeight: 4
+    spawnWeight: 8
   - powerUp: {fileID: 1085125274983362734, guid: 141db5c4452844b26985a4afa5f5da60,
       type: 3}
     spawnWeight: 2
