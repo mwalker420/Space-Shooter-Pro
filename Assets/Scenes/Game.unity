@@ -173,6 +173,7 @@ MonoBehaviour:
       type: 3}
     spawnWeight: 2
   _waitTime: 5
+  advancedMovementProbability: 0.2
 --- !u!4 &40157837
 Transform:
   m_ObjectHideFlags: 0
@@ -403,6 +404,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5812836023315997193, guid: 985d49bc2af8b48da873fe63367dfa82,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.365
+      objectReference: {fileID: 0}
+    - target: {fileID: 5812836023315997193, guid: 985d49bc2af8b48da873fe63367dfa82,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.36284024
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 985d49bc2af8b48da873fe63367dfa82, type: 3}
