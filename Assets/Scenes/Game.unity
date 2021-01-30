@@ -172,8 +172,13 @@ MonoBehaviour:
   - powerUp: {fileID: 1586064779241572466, guid: f148512c2bd79412c8e678579498af7c,
       type: 3}
     spawnWeight: 2
-  _waitTime: 5
   advancedMovementProbability: 0.2
+  _waves:
+  - {fileID: 11400000, guid: 25f57893aad424b148f73e1d633c673d, type: 2}
+  - {fileID: 11400000, guid: 0bd47fb8d8fe94fd4be04e57758b82e5, type: 2}
+  - {fileID: 11400000, guid: a6e1b32a0e2474b99be63130a847ae29, type: 2}
+  - {fileID: 11400000, guid: b90125c2ed55b48b0abe0b31f53b3198, type: 2}
+  _timeBetweenWaves: 10
 --- !u!4 &40157837
 Transform:
   m_ObjectHideFlags: 0

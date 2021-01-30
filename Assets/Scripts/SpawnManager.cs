@@ -21,12 +21,15 @@ public class SpawnManager : MonoBehaviour
     private int _weightedSpawnTotal;
     private List<int> _weightedIndexLookupList = new List<int>();
 
-    [SerializeField]
-    private float _waitTime = 5.0f;
 
     private bool _stopSpawning = false;
 
     public float advancedMovementProbability = 0.3f;
+
+    [SerializeField]
+    private List<WaveObject> _waves = new List<WaveObject>();
+    [SerializeField]
+    private float _timeBetweenWaves;
 
     private void Start()
     {
@@ -57,17 +60,35 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemyRoutine()
     {
-        yield return new WaitForSeconds(3.0f);
-        while (_stopSpawning == false)
-        {
-            Vector3 posToSpawn = new Vector3(Random.Range(-9.0f, 9.0f), 8f, 0);
 
-            GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
-            bool useAdvancedMovement = Random.value <= advancedMovementProbability;
-            newEnemy.GetComponent<Enemy>().useAdvancedMovement = useAdvancedMovement;
-            newEnemy.transform.parent = _enemyContainer.transform;
-            yield return new WaitForSeconds(_waitTime);
+
+        int waveIdx = 0;
+        foreach (var wave in _waves)
+        {
+            yield return new WaitForSeconds(_timeBetweenWaves);
+
+            for (int i = 0; i < wave.enemyCount; i++)
+            {
+                Vector3 posToSpawn = new Vector3(Random.Range(-9.0f, 9.0f), 8f, 0);
+
+                GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
+                bool useAdvancedMovement = Random.value < wave.advancedMovementProbability;
+                newEnemy.GetComponent<Enemy>().useAdvancedMovement = useAdvancedMovement;
+                newEnemy.transform.parent = _enemyContainer.transform;
+                yield return new WaitForSeconds(wave.timeBetweenEnemies);
+                if (_stopSpawning)
+                {
+                    break;
+                }
+            }
+
+            waveIdx++;
+            if (_stopSpawning)
+            {
+                break;
+            }
         }
+        Debug.Log("Finished with waves");
     }
 
     IEnumerator SpawnPowerupRoutine()
