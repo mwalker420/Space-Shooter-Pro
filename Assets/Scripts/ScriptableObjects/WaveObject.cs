@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Wave", menuName = "ScriptableObjects/Wave", order = 1)]
+[CreateAssetMenu(fileName = "Wave1", menuName = "ScriptableObjects/Wave", order = 1)]
 public class WaveObject : ScriptableObject
 {
     public int enemyCount;

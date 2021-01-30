@@ -50,6 +50,12 @@ public class Player : MonoBehaviour
     private float _speedBoostMultiplier = 2.0f;
 
     [SerializeField]
+    private bool _useSlowDown = false;
+
+    [SerializeField]
+    private float _slowDownFactor = 0.5f;
+
+    [SerializeField]
     private Shields _shields;
 
     [SerializeField]
@@ -219,6 +225,11 @@ public class Player : MonoBehaviour
 
         float effectiveSpeed = _speed;
 
+        if (_useSlowDown)
+        {
+            effectiveSpeed *= _slowDownFactor;
+        }
+
         if (Input.GetKey(KeyCode.LeftShift) && CurrentThrusterValue > 0)
         {
             effectiveSpeed += _thrusterSpeedIncreaseForLeftShift;
@@ -381,6 +392,17 @@ public class Player : MonoBehaviour
         _isMissileActive = false;
     }
 
+    public void SlowDown()
+    {
+        _useSlowDown = true;
+        StartCoroutine(SlowDownRoutine());
+    }
+
+    IEnumerator SlowDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _useSlowDown = false;
+    }
 
 
 }

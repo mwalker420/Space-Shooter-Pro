@@ -7,13 +7,12 @@ public class Powerup : MonoBehaviour
     [SerializeField]
     private float _speed = 3.0f;
 
-    // ID for Powerups
-    //0 = Triple shot
-    //1 = Speed
-    //2 = Shield
-    //3 = Ammo
+    public enum PowerUpId
+    {
+        TripleShot, Speed, Shield, Ammo, Health, Missiles, Negative
+    };
     [SerializeField]
-    private int powerupID;
+    private PowerUpId powerupID;
 
     private AudioManager _audioManager;
 
@@ -46,23 +45,26 @@ public class Powerup : MonoBehaviour
             {
                 switch (powerupID)
                 {
-                    case 0:
+                    case PowerUpId.TripleShot:
                         player.EnableTripleShot();
                         break;
-                    case 1:
+                    case PowerUpId.Speed:
                         player.EnableSpeedBoost();
                         break;
-                    case 2:
+                    case PowerUpId.Shield:
                         player.EnableShield();
                         break;
-                    case 3:
+                    case PowerUpId.Ammo:
                         player.ReplenishAmmo();
                         break;
-                    case 4:
+                    case PowerUpId.Health:
                         player.IncreaseHealth();
                         break;
-                    case 5:
+                    case PowerUpId.Missiles:
                         player.EnableMissiles();
+                        break;
+                    case PowerUpId.Negative:
+                        player.SlowDown();
                         break;
                     default:
                         Debug.Log("Default value");
@@ -71,7 +73,15 @@ public class Powerup : MonoBehaviour
 
 
             }
-            _audioManager.PlayPowerup();
+            if (powerupID == PowerUpId.Negative)
+            {
+                _audioManager.PlayPowerDown();
+            }
+            else
+            {
+                _audioManager.PlayPowerup();
+            }
+
             Destroy(gameObject);
         }
     }

@@ -12,6 +12,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private AudioClip _powerupAudio;
 
+    [SerializeField]
+    private AudioClip _powerDownAudio;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +33,11 @@ public class AudioManager : MonoBehaviour
     public void PlayPowerup()
     {
         _audioSource.PlayOneShot(_powerupAudio);
+    }
+
+    public void PlayPowerDown()
+    {
+        _audioSource.PlayOneShot(_powerDownAudio);
     }
 
 

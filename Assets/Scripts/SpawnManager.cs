@@ -21,10 +21,7 @@ public class SpawnManager : MonoBehaviour
     private int _weightedSpawnTotal;
     private List<int> _weightedIndexLookupList = new List<int>();
 
-
     private bool _stopSpawning = false;
-
-    public float advancedMovementProbability = 0.3f;
 
     [SerializeField]
     private List<WaveObject> _waves = new List<WaveObject>();
