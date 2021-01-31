@@ -18,7 +18,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _empBlastPrefab;
 
-    public bool useAdvancedMovement = false;
+    [SerializeField]
+    private bool _useAdvancedMovement = false;
     [SerializeField]
     private Vector3 _advancedDirection = new Vector3(1, -1, 0);
 
@@ -73,7 +74,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (useAdvancedMovement)
+        if (_useAdvancedMovement)
         {
             AdvancedMovement();
         }

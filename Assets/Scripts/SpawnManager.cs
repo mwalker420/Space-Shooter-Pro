@@ -6,20 +6,14 @@ using UnityEngine;
 public class PowerUpEntry
 {
     public GameObject powerUp;
-    public int spawnWeight = 1; // The larger the relative weight the higher chances of spawning.
+    public int spawnWeight = 10; // The larger the relative weight the higher chances of spawning.
 }
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject _enemyPrefab;
-    [SerializeField]
-    private GameObject _enemyContainer;
-    [SerializeField]
-    private PowerUpEntry[] _powerupEntries;
 
-    private int _weightedSpawnTotal;
-    private List<int> _weightedIndexLookupList = new List<int>();
+    [SerializeField]
+    private GameObject _spawnItemContainer;
 
     private bool _stopSpawning = false;
 
@@ -28,82 +22,111 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private float _timeBetweenWaves;
 
-    private void Start()
+    private void BuildWeightedLookupTable(List<SpawnItem> spawnItems, out List<int> weightedIndexLookupList, out int weightedSpawnTotal)
     {
-        BuildWeightedLookupTable();
-    }
-
-    private void BuildWeightedLookupTable()
-    {
-        // This is probably not particulary memory efficient but
-        // so long as the weights for the handful of powerups
+        // SMELL: This is probably not particulary memory efficient but
+        // so long as the weights for the handful of spawnItems
         // don't get out of control this should suffice.
-        for (var idx = 0; idx < _powerupEntries.Length; idx++)
+        weightedIndexLookupList = new List<int>();
+        for (var idx = 0; idx < spawnItems.Count; idx++)
         {
-            PowerUpEntry entry = _powerupEntries[idx];
-            for (var i = 0; i < entry.spawnWeight; i++)
+            SpawnItem spawnItem = spawnItems[idx];
+            for (var i = 0; i < spawnItem.spawnWeight; i++)
             {
-                _weightedIndexLookupList.Add(idx);
+                weightedIndexLookupList.Add(idx);
             }
         }
-        _weightedSpawnTotal = _weightedIndexLookupList.Count;
+        weightedSpawnTotal = weightedIndexLookupList.Count;
     }
 
     public void StartSpawning()
     {
-        StartCoroutine(SpawnEnemyRoutine());
-        StartCoroutine(SpawnPowerupRoutine());
+
+        StartCoroutine(SpawnEnemiesRoutine());
+        StartCoroutine(SpawnPowerupsRoutine());
     }
 
-    IEnumerator SpawnEnemyRoutine()
+    IEnumerator SpawnEnemiesRoutine()
     {
+        List<int> weightedIndexLookupList;
+        int weightedSpawnTotal;
 
+        yield return new WaitForSeconds(3.0f); //initial pause before starting
 
         int waveIdx = 0;
         foreach (var wave in _waves)
         {
-            yield return new WaitForSeconds(_timeBetweenWaves);
+            Debug.Log("Wave " + waveIdx);
+            waveIdx++;
 
-            foreach (var enemy in wave.enemies)
+
+            BuildWeightedLookupTable(wave.enemies, out weightedIndexLookupList, out weightedSpawnTotal);
+
+            int spawnCount = 0;
+            while (spawnCount < wave.totalEnemies && _stopSpawning == false)
             {
-                Vector3 posToSpawn = new Vector3(Random.Range(-9.0f, 9.0f), 8f, 0);
+                Vector3 posToSpawn = new Vector3(Random.Range(-9f, 9.0f), 8f, 0);
 
-                GameObject newEnemy = Instantiate(enemy, posToSpawn, Quaternion.identity);
-                bool useAdvancedMovement = Random.value < wave.advancedMovementProbability;
-                newEnemy.GetComponent<Enemy>().useAdvancedMovement = useAdvancedMovement;
-                newEnemy.transform.parent = _enemyContainer.transform;
-                yield return new WaitForSeconds(wave.timeBetweenEnemies);
-                if (_stopSpawning)
-                {
-                    break;
-                }
+                int randomWeightedIndex = Random.Range(0, weightedSpawnTotal);
+                int powerUpIndex = weightedIndexLookupList[randomWeightedIndex];
+
+
+                GameObject newSpawnItem = Instantiate(wave.enemies[powerUpIndex].itemPrefab, posToSpawn, Quaternion.identity);
+                newSpawnItem.transform.parent = _spawnItemContainer.transform;
+
+                spawnCount++;
+                yield return new WaitForSeconds(wave.timeBetweenEnemySpawnItems);
+
             }
 
-            waveIdx++;
             if (_stopSpawning)
             {
                 break;
             }
+            yield return new WaitForSeconds(_timeBetweenWaves);
+
         }
         Debug.Log("Finished with waves");
     }
 
-    IEnumerator SpawnPowerupRoutine()
+    IEnumerator SpawnPowerupsRoutine()
     {
-        yield return new WaitForSeconds(3.0f);
-        while (_stopSpawning == false)
+        List<int> weightedIndexLookupList;
+        int weightedSpawnTotal;
+
+        yield return new WaitForSeconds(3.0f); //initial pause before starting
+
+        int waveIdx = 0;
+        foreach (var wave in _waves)
         {
-            Vector3 posToSpawn = new Vector3(Random.Range(-9f, 9.0f), 8f, 0);
+            Debug.Log("Wave " + waveIdx);
+            waveIdx++;
 
-            int randomWeightedIndex = Random.Range(0, _weightedSpawnTotal);
-            int powerUpIndex = _weightedIndexLookupList[randomWeightedIndex];
+            BuildWeightedLookupTable(wave.powerups, out weightedIndexLookupList, out weightedSpawnTotal);
 
-            GameObject newPowerup = Instantiate(_powerupEntries[powerUpIndex].powerUp, posToSpawn, Quaternion.identity);
+            int spawnCount = 0;
+            while (spawnCount < wave.totalPowerups && _stopSpawning == false)
+            {
+                Vector3 posToSpawn = new Vector3(Random.Range(-9f, 9.0f), 8f, 0);
 
-            newPowerup.transform.parent = transform;
-            yield return new WaitForSeconds(Random.Range(3, 8));
+                int randomWeightedIndex = Random.Range(0, weightedSpawnTotal);
+                int powerUpIndex = weightedIndexLookupList[randomWeightedIndex];
+
+                GameObject newSpawnItem = Instantiate(wave.powerups[powerUpIndex].itemPrefab, posToSpawn, Quaternion.identity);
+                newSpawnItem.transform.parent = _spawnItemContainer.transform;
+
+                spawnCount++;
+                yield return new WaitForSeconds(wave.timeBetweenPowerupSpawnItems);
+            }
+
+            if (_stopSpawning)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(_timeBetweenWaves);
+
         }
-
+        Debug.Log("Finished with waves");
     }
 
 

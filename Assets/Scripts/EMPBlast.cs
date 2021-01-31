@@ -20,7 +20,6 @@ public class EMPBlast : MonoBehaviour
     {
         if (_doExpand)
         {
-            Debug.Log("EMPBlast scale " + transform.localScale);
             transform.localScale *= _animatedScaleFactor;
         }
     }

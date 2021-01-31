@@ -150,36 +150,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f36fd47f789b4c9e96a81fd5d9ca08b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18,
-    type: 3}
-  _enemyContainer: {fileID: 883360596}
-  _powerupEntries:
-  - powerUp: {fileID: 1085125274983362734, guid: 62cca7ec09c414282832c1f6a07318ad,
-      type: 3}
-    spawnWeight: 8
-  - powerUp: {fileID: 1085125274983362734, guid: 141db5c4452844b26985a4afa5f5da60,
-      type: 3}
-    spawnWeight: 2
-  - powerUp: {fileID: 1085125274983362734, guid: 5e0e1e70a387d468eb7220276ead5f25,
-      type: 3}
-    spawnWeight: 1
-  - powerUp: {fileID: 1085125274983362734, guid: 85b04a09e98ea4a628e90273ccccf0ad,
-      type: 3}
-    spawnWeight: 2
-  - powerUp: {fileID: 2667368668141772946, guid: 8c3f1cfcfa127476dac071a90174b246,
-      type: 3}
-    spawnWeight: 2
-  - powerUp: {fileID: 1586064779241572466, guid: f148512c2bd79412c8e678579498af7c,
-      type: 3}
-    spawnWeight: 2
-  - powerUp: {fileID: 5117164630301067066, guid: ced9ea68ae84943c2a481edf189aef59,
-      type: 3}
-    spawnWeight: 2
+  _spawnItemContainer: {fileID: 883360596}
   _waves:
-  - {fileID: 11400000, guid: 25f57893aad424b148f73e1d633c673d, type: 2}
-  - {fileID: 11400000, guid: 0bd47fb8d8fe94fd4be04e57758b82e5, type: 2}
-  - {fileID: 11400000, guid: a6e1b32a0e2474b99be63130a847ae29, type: 2}
-  - {fileID: 11400000, guid: b90125c2ed55b48b0abe0b31f53b3198, type: 2}
+  - {fileID: 11400000, guid: 96a4c37c524144453842f88109dc7d5c, type: 2}
+  - {fileID: 11400000, guid: be640c2d466b546a08610915e1b4817e, type: 2}
+  - {fileID: 11400000, guid: 2c684daca2d0d4b1b874a7a94d70067b, type: 2}
+  - {fileID: 11400000, guid: 3fe2f556d098440128515e0086ab53dd, type: 2}
   _timeBetweenWaves: 10
 --- !u!4 &40157837
 Transform:
@@ -1249,7 +1225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 883360597}
   m_Layer: 0
-  m_Name: EnemyContainer
+  m_Name: Spawn_Item_Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
