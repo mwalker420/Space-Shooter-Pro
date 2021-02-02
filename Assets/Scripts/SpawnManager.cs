@@ -41,7 +41,6 @@ public class SpawnManager : MonoBehaviour
 
     public void StartSpawning()
     {
-
         StartCoroutine(SpawnEnemiesRoutine());
         StartCoroutine(SpawnPowerupsRoutine());
     }
@@ -53,12 +52,8 @@ public class SpawnManager : MonoBehaviour
 
         yield return new WaitForSeconds(3.0f); //initial pause before starting
 
-        int waveIdx = 0;
         foreach (var wave in _waves)
         {
-            Debug.Log("Wave " + waveIdx);
-            waveIdx++;
-
 
             BuildWeightedLookupTable(wave.enemies, out weightedIndexLookupList, out weightedSpawnTotal);
 
@@ -86,7 +81,7 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(_timeBetweenWaves);
 
         }
-        Debug.Log("Finished with waves");
+        Debug.Log("Finished with enemy waves");
     }
 
     IEnumerator SpawnPowerupsRoutine()
@@ -96,11 +91,8 @@ public class SpawnManager : MonoBehaviour
 
         yield return new WaitForSeconds(3.0f); //initial pause before starting
 
-        int waveIdx = 0;
         foreach (var wave in _waves)
         {
-            Debug.Log("Wave " + waveIdx);
-            waveIdx++;
 
             BuildWeightedLookupTable(wave.powerups, out weightedIndexLookupList, out weightedSpawnTotal);
 
@@ -126,7 +118,7 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(_timeBetweenWaves);
 
         }
-        Debug.Log("Finished with waves");
+        Debug.Log("Finished with powerup waves");
     }
 
 

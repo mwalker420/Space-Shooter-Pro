@@ -35,6 +35,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _thrusterLabel;
 
+    [SerializeField]
+    private Text _debugText;
 
 
     void Start()
@@ -108,4 +110,11 @@ public class UIManager : MonoBehaviour
         _thrusterLabel.text = String.Format("Thruster: {0}%", percentage);
         _thrusterIndicator.Percentage = (float)current / max;
     }
+
+    public void SetDebugText(string text)
+    {
+        _debugText.text = text;
+    }
+
+
 }

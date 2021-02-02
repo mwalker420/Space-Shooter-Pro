@@ -14,9 +14,9 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private GameObject _laserPrefab;
-
     [SerializeField]
     private GameObject _empBlastPrefab;
+    public bool HasEMPWeapon;
 
     [SerializeField]
     private bool _useAdvancedMovement = false;
@@ -25,12 +25,22 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private GameObject _enemyShieldPrefab;
-
     [SerializeField]
     private bool _shieldIsEnabled;
 
+    [SerializeField]
+    private bool _rammingIsEnabled = false;
+    [SerializeField]
+    private float _rammingSpeed = 4.0f;
+    [SerializeField]
+    private float _rammingDetectionDistance = 4.5f;
+    private bool _rammingInProgress = false;
 
-    public bool HasEMPWeapon;
+
+    //[SerializeField]
+    //UIManager _uiManager;
+
+    private Rigidbody2D _rb;
 
     private void Start()
     {
@@ -58,7 +68,13 @@ public class Enemy : MonoBehaviour
 
 
         _enemyShieldPrefab.SetActive(_shieldIsEnabled);
-  
+
+        //_uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        //if(_uiManager == null)
+        //{
+        //    Debug.LogError("UIManager is NULL");
+        //}
+
 
     }
 
@@ -84,7 +100,19 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (_useAdvancedMovement)
+        // handle ramming
+        if (_rammingIsEnabled && !_rammingInProgress)
+        {
+            _rammingInProgress = CheckForRamming();
+        }
+        //_uiManager.SetDebugText("ramming in progress: " + (_rammingInProgress ? "true" : "false"));
+
+        // process movement
+        if (_rammingInProgress)
+        {
+            RammingMovement();
+        }
+        else if (_useAdvancedMovement)
         {
             AdvancedMovement();
         }
@@ -102,6 +130,46 @@ public class Enemy : MonoBehaviour
             transform.position = new Vector3(randomX, 8f, 0);
         }
 
+    }
+
+
+
+    private bool CheckForRamming()
+    {
+        if (!_rammingIsEnabled)
+        {
+            return false;
+        }
+
+        // get distance to player
+        Vector3 distanceToPlayer = _player.transform.position - transform.position;
+
+        // if distance is within ramming distance
+        if (distanceToPlayer.magnitude <= _rammingDetectionDistance)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void RammingMovement()
+    {
+        // get distance to player
+        Vector3 relativePosition = _player.transform.position - transform.position;
+
+        // if distance is within ramming distance
+        if (relativePosition.magnitude <= _rammingDetectionDistance)
+        {
+            // then move toward player at ramming speed.
+            relativePosition.Normalize(); //only care about the direction now
+            transform.Translate(relativePosition * _rammingSpeed * Time.deltaTime);
+        }
+        else
+        {
+            _rammingInProgress = false;
+    
+        }
     }
 
     private void RegularMovement()
@@ -127,10 +195,20 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.tag == "Player" && _rammingInProgress)
+        {
+            _rammingIsEnabled = false;
+            _rammingInProgress = false;
+        }
+
         if ((other.tag == "Player" || other.tag == "Laser") && _shieldIsEnabled)
         {
             _shieldIsEnabled = false;
             _enemyShieldPrefab.SetActive(false);
+            if (_player != null)
+            {
+                _player.Damage();
+            }
             return;
         }
 
@@ -141,11 +219,7 @@ public class Enemy : MonoBehaviour
             {
                 player.Damage();
             }
-            _anim.SetTrigger("OnEnemyDeath");
-            _speed = 0;
-            _audioManager.PlayExplosion();
-            StopAllCoroutines(); //don't want enemy to get any shots off if destroyed
-            Destroy(gameObject, 2.8f);
+            DoDeath();
         }
 
         if (other.tag == "Laser")
@@ -154,14 +228,28 @@ public class Enemy : MonoBehaviour
             {
                 _player.AddScore(10);
             }
-
-            _anim.SetTrigger("OnEnemyDeath");
-            _speed = 0;
-            _audioManager.PlayExplosion();
             Destroy(GetComponent<Collider2D>());
+
             Destroy(other.gameObject);
-            StopAllCoroutines(); //don't want enemy to get any shots off if destroyed
-            Destroy(gameObject, 2.8f);
+            DoDeath();
+        }
+    }
+
+    private void DoDeath()
+    {
+        _anim.SetTrigger("OnEnemyDeath");
+        _speed = 0;
+        _audioManager.PlayExplosion();
+        StopAllCoroutines(); //don't want enemy to get any shots off if destroyed
+        Destroy(gameObject, 2.8f);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (_rammingIsEnabled)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, _rammingDetectionDistance);
         }
     }
 }
