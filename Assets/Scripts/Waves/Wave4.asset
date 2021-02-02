@@ -23,6 +23,9 @@ MonoBehaviour:
   - itemPrefab: {fileID: 6297184804970002370, guid: e2120d25c29ae48548908cdb3f2c0d32,
       type: 3}
     spawnWeight: 20
+  - itemPrefab: {fileID: 1896014691127620054, guid: 5ae918b379d624870bf1db55862e273f,
+      type: 3}
+    spawnWeight: 20
   timeBetweenEnemySpawnItems: 2.12
   totalPowerups: 8
   powerups:

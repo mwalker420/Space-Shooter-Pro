@@ -23,6 +23,12 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Vector3 _advancedDirection = new Vector3(1, -1, 0);
 
+    [SerializeField]
+    private GameObject _enemyShieldPrefab;
+
+    [SerializeField]
+    private bool _shieldIsEnabled;
+
 
     public bool HasEMPWeapon;
 
@@ -49,6 +55,10 @@ public class Enemy : MonoBehaviour
         }
 
         StartCoroutine(FireLasers());
+
+
+        _enemyShieldPrefab.SetActive(_shieldIsEnabled);
+  
 
     }
 
@@ -117,6 +127,12 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if ((other.tag == "Player" || other.tag == "Laser") && _shieldIsEnabled)
+        {
+            _shieldIsEnabled = false;
+            _enemyShieldPrefab.SetActive(false);
+            return;
+        }
 
         if (other.tag == "Player")
         {
