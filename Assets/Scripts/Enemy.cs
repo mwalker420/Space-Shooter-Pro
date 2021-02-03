@@ -107,9 +107,14 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+                FireLaser();
             }
         }
+    }
+
+    public void FireLaser()
+    {
+        Instantiate(_laserPrefab, transform.position, Quaternion.identity);
     }
 
     void Update()
@@ -192,13 +197,16 @@ public class Enemy : MonoBehaviour
             return false;
         }
 
-        // get distance to player
-        Vector3 distanceToPlayer = _player.transform.position - transform.position;
-
-        // if distance is within ramming distance
-        if (distanceToPlayer.magnitude <= _rammingDetectionDistance)
+        if (_player != null)
         {
-            return true;
+            // get distance to player
+            Vector3 distanceToPlayer = _player.transform.position - transform.position;
+
+            // if distance is within ramming distance
+            if (distanceToPlayer.magnitude <= _rammingDetectionDistance)
+            {
+                return true;
+            }
         }
 
         return false;

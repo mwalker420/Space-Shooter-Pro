@@ -84,6 +84,11 @@ public class Powerup : MonoBehaviour
 
             Destroy(gameObject);
         }
+
+        if (other.tag == "EnemyLaser")
+        {
+            Destroy(gameObject);
+        }
     }
 
 
