@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +17,12 @@ public class Powerup : MonoBehaviour
 
     private AudioManager _audioManager;
 
+    private bool _moveToPlayer;
+    [SerializeField]
+    private float _moveToPlayerSpeed = 10.0f;
+
+    private GameObject _player;
+
     private void Start()
     {
         _audioManager = GameObject.Find("Audio_Manager").GetComponent<AudioManager>();
@@ -23,17 +30,45 @@ public class Powerup : MonoBehaviour
         {
             Debug.LogError("AudioManager null for Powerup");
         }
+
+        _player = GameObject.Find("Player");
+        if (_player == null)
+        {
+            Debug.LogError("Player null for Powerup");
+        }
     }
 
     void Update()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log("Move to Player");
+            _moveToPlayer = true;
+        }
+
+        if (_moveToPlayer)
+        {
+            MoveToPlayer();
+        }
+        else
+        {
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        }
+
 
         if (transform.position.y < -6f)
         {
             Destroy(gameObject);
         }
 
+    }
+
+    private void MoveToPlayer()
+    {
+        Vector3 direction = _player.transform.position - transform.position;
+        direction.Normalize();
+        transform.Translate(direction * _moveToPlayerSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

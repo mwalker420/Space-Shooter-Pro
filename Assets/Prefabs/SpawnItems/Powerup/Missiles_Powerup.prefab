@@ -136,6 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 2.5
   powerupID: 5
+  _moveToPlayerSpeed: 10
 --- !u!95 &1516959693
 Animator:
   serializedVersion: 3
