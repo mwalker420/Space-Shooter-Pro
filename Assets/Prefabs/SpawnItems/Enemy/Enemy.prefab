@@ -54,11 +54,17 @@ MonoBehaviour:
     type: 3}
   _empBlastPrefab: {fileID: 3412767028901779918, guid: fbbb7a45851b74f249e05356850c2bc2,
     type: 3}
+  HasEMPWeapon: 0
   _useAdvancedMovement: 0
   _advancedDirection: {x: 1, y: -1, z: 0}
   _enemyShieldPrefab: {fileID: 492208648486102687}
   _shieldIsEnabled: 0
-  HasEMPWeapon: 0
+  _rammingIsEnabled: 0
+  _rammingSpeed: 4
+  _rammingDetectionDistance: 4.5
+  _isSmartEnemy: 0
+  _rearFiringEnemyLaser: {fileID: 6486643780638681077, guid: 5abac3459689f43aea91fa7106a1ca89,
+    type: 3}
 --- !u!212 &3277869613919623476
 SpriteRenderer:
   m_ObjectHideFlags: 0

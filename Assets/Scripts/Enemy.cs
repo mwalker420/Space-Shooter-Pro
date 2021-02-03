@@ -12,22 +12,32 @@ public class Enemy : MonoBehaviour
 
     private AudioManager _audioManager;
 
+    #region Weapons
     [SerializeField]
     private GameObject _laserPrefab;
+
     [SerializeField]
     private GameObject _empBlastPrefab;
     public bool HasEMPWeapon;
 
+
+    #endregion Weapons
+
+    #region Advanced Movement Behavior
     [SerializeField]
     private bool _useAdvancedMovement = false;
     [SerializeField]
     private Vector3 _advancedDirection = new Vector3(1, -1, 0);
+    #endregion Advanced Movement Behavior
 
+    #region Shield Behavior
     [SerializeField]
     private GameObject _enemyShieldPrefab;
     [SerializeField]
     private bool _shieldIsEnabled;
+    #endregion Shield Behavior
 
+    #region Ramming Behavior
     [SerializeField]
     private bool _rammingIsEnabled = false;
     [SerializeField]
@@ -35,10 +45,17 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _rammingDetectionDistance = 4.5f;
     private bool _rammingInProgress = false;
+    #endregion Ramming Behavior
 
+    #region Smart Enemy
+    [SerializeField]
+    private bool _isSmartEnemy = false;
+    [SerializeField]
+    private GameObject _rearFiringEnemyLaser;
+    private bool _rearLaserFired = false;
+    #endregion Smart Enemy
 
-    //[SerializeField]
-    //UIManager _uiManager;
+    UIManager _uiManager;
 
     private Rigidbody2D _rb;
 
@@ -69,11 +86,11 @@ public class Enemy : MonoBehaviour
 
         _enemyShieldPrefab.SetActive(_shieldIsEnabled);
 
-        //_uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        //if(_uiManager == null)
-        //{
-        //    Debug.LogError("UIManager is NULL");
-        //}
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (_uiManager == null)
+        {
+            Debug.LogError("UIManager is NULL");
+        }
 
 
     }
@@ -92,9 +109,6 @@ public class Enemy : MonoBehaviour
             {
                 Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             }
-
-
-
         }
     }
 
@@ -105,7 +119,13 @@ public class Enemy : MonoBehaviour
         {
             _rammingInProgress = CheckForRamming();
         }
-        //_uiManager.SetDebugText("ramming in progress: " + (_rammingInProgress ? "true" : "false"));
+
+        bool playerIsBehind = CheckForPlayerBehind();
+        if (_isSmartEnemy && playerIsBehind)
+        {
+            FireRearWeapon();
+        }
+
 
         // process movement
         if (_rammingInProgress)
@@ -132,7 +152,38 @@ public class Enemy : MonoBehaviour
 
     }
 
+    private void FireRearWeapon()
+    {
+        if (!_rearLaserFired)
+        {
+            Debug.Log("FireRearWeapon");
+            Instantiate(_rearFiringEnemyLaser, transform.position, Quaternion.identity);
+            _rearLaserFired = true;
+            StartCoroutine(ResetRearFiringLaser());
 
+        }
+
+    }
+    IEnumerator ResetRearFiringLaser()
+    {
+        yield return new WaitForSeconds(3.0f);
+        _rearLaserFired = false;
+    }
+
+    private bool CheckForPlayerBehind()
+    {
+        if (_player != null)
+        {
+            Vector3 relativePosition = _player.transform.position - transform.position;
+
+            if (relativePosition.x < 1.0f && relativePosition.x > -1.0f && relativePosition.y > 0)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     private bool CheckForRamming()
     {
@@ -168,7 +219,7 @@ public class Enemy : MonoBehaviour
         else
         {
             _rammingInProgress = false;
-    
+
         }
     }
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae9682068ddf544eb8acf09c131a8818, type: 3}
   m_Name: Wave4
   m_EditorClassIdentifier: 
-  totalEnemies: 13
+  totalEnemies: 14
   enemies:
   - itemPrefab: {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18,
       type: 3}
@@ -24,6 +24,9 @@ MonoBehaviour:
       type: 3}
     spawnWeight: 20
   - itemPrefab: {fileID: 1896014691127620054, guid: 5ae918b379d624870bf1db55862e273f,
+      type: 3}
+    spawnWeight: 20
+  - itemPrefab: {fileID: 8125923881170188085, guid: 9ed96bc356d6342a8824e38c0825a0e7,
       type: 3}
     spawnWeight: 20
   timeBetweenEnemySpawnItems: 2.12
