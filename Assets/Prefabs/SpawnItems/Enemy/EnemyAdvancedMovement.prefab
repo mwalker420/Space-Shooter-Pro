@@ -27,8 +27,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 529433692797347234, guid: ce719b797ec75481193bfc8d10899f18,
         type: 3}
+      propertyPath: _evasiveActionSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 529433692797347234, guid: ce719b797ec75481193bfc8d10899f18,
+        type: 3}
       propertyPath: _useAdvancedMovement
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 529433692797347234, guid: ce719b797ec75481193bfc8d10899f18,
+        type: 3}
+      propertyPath: _evasiveActionDuration
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 535211577606616594, guid: ce719b797ec75481193bfc8d10899f18,
         type: 3}

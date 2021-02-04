@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalEnemies: 14
   enemies:
-  - itemPrefab: {fileID: 5315550642653803240, guid: ce719b797ec75481193bfc8d10899f18,
+  - itemPrefab: {fileID: 8891755042289300121, guid: 37d012c6cf1054b9193e492eaf7a14e0,
       type: 3}
     spawnWeight: 20
   - itemPrefab: {fileID: 5386163947548759576, guid: f923b8976ab3548918f4c5b11a984a78,

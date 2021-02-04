@@ -43,7 +43,6 @@ public class Powerup : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            Debug.Log("Move to Player");
             _moveToPlayer = true;
         }
 

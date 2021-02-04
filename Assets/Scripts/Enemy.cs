@@ -59,6 +59,17 @@ public class Enemy : MonoBehaviour
 
     private Rigidbody2D _rb;
 
+    private bool _useEvasiveAction;
+
+    [SerializeField]
+    private float _evasiveActionDuration = 2.0f;
+
+    [SerializeField]
+    private float _evasiveActionSpeed = 5.0f;
+
+    [SerializeField]
+    private Vector3 _evasiveActionDirection = new Vector3(2f, 0.5f, 0);
+
     private void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -133,7 +144,11 @@ public class Enemy : MonoBehaviour
 
 
         // process movement
-        if (_rammingInProgress)
+        if (_useEvasiveAction)
+        {
+            EvasiveMovement();
+        }
+        else if (_rammingInProgress)
         {
             RammingMovement();
         }
@@ -215,6 +230,12 @@ public class Enemy : MonoBehaviour
     private void RammingMovement()
     {
         // get distance to player
+        if (_player == null)
+        {
+            _rammingInProgress = false;
+            return;
+        }
+
         Vector3 relativePosition = _player.transform.position - transform.position;
 
         // if distance is within ramming distance
@@ -250,6 +271,34 @@ public class Enemy : MonoBehaviour
         }
 
         transform.Translate(_advancedDirection * _speed * Time.deltaTime);
+    }
+
+    private void EvasiveMovement()
+    {
+        // we're just borrowing the advanced movement at a little higher speed
+        if (transform.position.x > 9f)
+        {
+            _evasiveActionDirection.x *= -1f;
+        }
+        else if (transform.position.x < -9f)
+        {
+            _evasiveActionDirection.x *= -1f;
+        }
+
+        transform.Translate(_evasiveActionDirection * _evasiveActionSpeed * Time.deltaTime);
+    }
+
+    public void EvadeObject()
+    {
+        Debug.Log("Use Evasive Action");
+        _useEvasiveAction = true;
+        StartCoroutine(ResetEvasiveMovementRoutine());
+    }
+
+    IEnumerator ResetEvasiveMovementRoutine()
+    {
+        yield return new WaitForSeconds(_evasiveActionDuration);
+        _useEvasiveAction = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -296,6 +345,9 @@ public class Enemy : MonoBehaviour
 
     private void DoDeath()
     {
+        _rammingInProgress = false;
+        _rammingIsEnabled = false;
+        _useEvasiveAction = false;
         _anim.SetTrigger("OnEnemyDeath");
         _speed = 0;
         _audioManager.PlayExplosion();
