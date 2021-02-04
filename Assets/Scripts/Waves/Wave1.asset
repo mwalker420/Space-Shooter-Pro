@@ -25,5 +25,5 @@ MonoBehaviour:
     spawnWeight: 10
   - itemPrefab: {fileID: 2667368668141772946, guid: 8c3f1cfcfa127476dac071a90174b246,
       type: 3}
-    spawnWeight: 10
+    spawnWeight: 20
   timeBetweenPowerupSpawnItems: 3

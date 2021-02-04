@@ -14,6 +14,8 @@ public class Missile : MonoBehaviour
     private Transform _target;
     private Rigidbody2D rb;
 
+    private GameObject _spawnItemContainer;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -21,6 +23,13 @@ public class Missile : MonoBehaviour
         {
             Debug.LogError("Rigidbody2D is NULL.");
         }
+
+        _spawnItemContainer = GameObject.Find("Spawn_Item_Container");
+        if (_spawnItemContainer == null)
+        {
+            Debug.LogError("Spawn_Item_Container is null for missile");
+        }
+
 
         _target = AquireTargetTransform();
         Destroy(gameObject, _selfDestructTime);
@@ -54,11 +63,33 @@ public class Missile : MonoBehaviour
 
     private Transform AquireTargetTransform()
     {
-        var target = GameObject.Find("Enemy(Clone)");
-        if (target != null)
+        //var target = GameObject.Find("Enemy(Clone)");
+        //if (target != null)
+        //{
+        //    return target.transform;
+        //}
+        //return null;
+
+        Component[] enemyList = _spawnItemContainer.GetComponentsInChildren<Enemy>();
+        if (enemyList.Length == 0)
         {
-            return target.transform;
+            return null;
         }
-        return null;
+
+        Component nearestEnemy = null;
+        float minSqrDistance = Mathf.Infinity;
+        foreach(var enemy in enemyList)
+        {
+            float sqrDistance = (transform.position - enemy.transform.position).sqrMagnitude;
+            if(sqrDistance < minSqrDistance)
+            {
+                minSqrDistance = sqrDistance;
+                nearestEnemy = enemy;
+            }
+        }
+
+        return nearestEnemy.transform;
+
+
     }
 }
