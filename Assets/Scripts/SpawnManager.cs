@@ -11,6 +11,18 @@ public class PowerUpEntry
 
 public class SpawnManager : MonoBehaviour
 {
+    private static SpawnManager _instance;
+    public static SpawnManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("SpawnManager instance is null");
+            }
+            return _instance;
+        }
+    }
 
     [SerializeField]
     private GameObject _spawnItemContainer;
@@ -21,6 +33,11 @@ public class SpawnManager : MonoBehaviour
     private List<WaveObject> _waves = new List<WaveObject>();
     [SerializeField]
     private float _timeBetweenWaves;
+
+    private void Awake()
+    {
+        _instance = this;
+    }
 
     private void BuildWeightedLookupTable(List<SpawnItem> spawnItems, out List<int> weightedIndexLookupList, out int weightedSpawnTotal)
     {
@@ -81,7 +98,6 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(_timeBetweenWaves);
 
         }
-        Debug.Log("Finished with enemy waves");
     }
 
     IEnumerator SpawnPowerupsRoutine()
@@ -118,11 +134,10 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(_timeBetweenWaves);
 
         }
-        Debug.Log("Finished with powerup waves");
     }
 
 
-    public void OnPlayerDeath()
+    public void OnGameOver()
     {
         _stopSpawning = true;
     }

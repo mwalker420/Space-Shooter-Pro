@@ -65,9 +65,13 @@ public class Powerup : MonoBehaviour
 
     private void MoveToPlayer()
     {
-        Vector3 direction = _player.transform.position - transform.position;
-        direction.Normalize();
-        transform.Translate(direction * _moveToPlayerSpeed * Time.deltaTime);
+        if (_player != null)
+        {
+            Vector3 direction = _player.transform.position - transform.position;
+            direction.Normalize();
+            transform.Translate(direction * _moveToPlayerSpeed * Time.deltaTime);
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)

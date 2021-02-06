@@ -20,7 +20,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _reloadLevelText;
 
-    private GameManager _gameManager;
 
     [SerializeField]
     private Indicator _shieldIndicator;
@@ -38,19 +37,26 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _debugText;
 
+    [SerializeField]
+    private Text _instructionsText;
+
+    private static UIManager _instance;
+    public static UIManager Instance
+    {
+        get { return _instance; }
+    }
+
+    private void Awake()
+    {
+        _instance = this;
+    }
+
 
     void Start()
     {
-
         _scoreText.text = "Score: " + 0;
         _gameOverText.gameObject.SetActive(false);
         _reloadLevelText.gameObject.SetActive(false);
-        _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
-        if (_gameManager == null)
-        {
-            Debug.LogError("GameManager is NULL.");
-        }
-
         _shieldIndicator.ShowIndicator(false);
     }
 
@@ -68,12 +74,21 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    void GameOverSequence()
+    public void GameWinSequence()
+    {
+        _gameOverText.text = "Mission Accomplished";
+        GameOverSequence();
+    }
+    public void GameLoseSequence()
+    {
+        _gameOverText.text = "Game Over";
+        GameOverSequence();
+    }
+    private void GameOverSequence()
     {
         _gameOverText.gameObject.SetActive(true);
         _reloadLevelText.gameObject.SetActive(true);
         StartCoroutine(FlickerGameOverTextRoutine());
-        _gameManager.GameOver();
     }
 
     IEnumerator FlickerGameOverTextRoutine()
@@ -114,6 +129,11 @@ public class UIManager : MonoBehaviour
     public void SetDebugText(string text)
     {
         _debugText.text = text;
+    }
+
+    public void ShowInstructions(bool show)
+    {
+        _instructionsText.gameObject.SetActive(show);
     }
 
 

@@ -37,8 +37,6 @@ public class Player : MonoBehaviour
     }
     #endregion Lives
 
-    private SpawnManager _spawnManager;
-
     [SerializeField]
     private bool _isTripleShotActive = false;
 
@@ -134,11 +132,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
-        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
-        if (_spawnManager == null)
-        {
-            Debug.LogError("The Spawn Manager is NULL");
-        }
+
 
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         if (_uiManager == null)
@@ -314,10 +308,9 @@ public class Player : MonoBehaviour
 
         if (Lives < 1)
         {
-            if (_spawnManager != null)
-            {
-                _spawnManager.OnPlayerDeath();
-            }
+
+            GameManager.Instance.GameOver();
+
             // adding sound here when the play dies for some kind of feedback.
             // would be even better if we had an explosion too.
             _audioSource.PlayOneShot(_explosionClip);

@@ -156,7 +156,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: be640c2d466b546a08610915e1b4817e, type: 2}
   - {fileID: 11400000, guid: 2c684daca2d0d4b1b874a7a94d70067b, type: 2}
   - {fileID: 11400000, guid: 3fe2f556d098440128515e0086ab53dd, type: 2}
-  _timeBetweenWaves: 10
+  - {fileID: 11400000, guid: bae62471e681b4809be26af2c9f1c770, type: 2}
+  _timeBetweenWaves: 8
 --- !u!4 &40157837
 Transform:
   m_ObjectHideFlags: 0
@@ -433,7 +434,7 @@ PrefabInstance:
     - target: {fileID: 6874740920974862487, guid: 57f4a9ce412dd4a6298417cd9f0f7f47,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6874740920974862487, guid: 57f4a9ce412dd4a6298417cd9f0f7f47,
         type: 3}
@@ -1182,6 +1183,7 @@ RectTransform:
   - {fileID: 271774050}
   - {fileID: 1821465003}
   - {fileID: 2071105522}
+  - {fileID: 1919723335}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1217,6 +1219,7 @@ MonoBehaviour:
   _thrusterIndicator: {fileID: 271774051}
   _thrusterLabel: {fileID: 1821465001}
   _debugText: {fileID: 2071105523}
+  _instructionsText: {fileID: 1919723336}
 --- !u!1 &883360596
 GameObject:
   m_ObjectHideFlags: 0
@@ -2201,7 +2204,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1831064806
 GameObject:
@@ -2319,6 +2322,93 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isShieldActive: 0
   _shieldStrength: 0
+--- !u!1 &1919723334
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1919723335}
+  - component: {fileID: 1919723337}
+  - component: {fileID: 1919723336}
+  m_Layer: 5
+  m_Name: Instructions_Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1919723335
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919723334}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 668369122}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 251, y: -48}
+  m_SizeDelta: {x: 213.98062, y: 105.9725}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1919723336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919723334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'wasd (or joystick) - movement
+
+    Space - Fire
+
+    Shift - Thrusters
+
+    C
+    - Collect all powerups
+
+    Esc - Quit'
+--- !u!222 &1919723337
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919723334}
+  m_CullTransparentMesh: 0
 --- !u!1 &2071105521
 GameObject:
   m_ObjectHideFlags: 0
@@ -2495,7 +2585,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 405897097
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 30
   m_Sprite: {fileID: 21300000, guid: 1b4a8fdd39d3a45d0a9ee484ad6800ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

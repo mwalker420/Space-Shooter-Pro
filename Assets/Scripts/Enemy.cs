@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        _player = GameObject.Find("Player").GetComponent<Player>();
+        _player = GameObject.Find("Player")?.GetComponent<Player>();
 
         if (_player == null)
         {
