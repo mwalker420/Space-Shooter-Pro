@@ -77,9 +77,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _failedLaserClip;
 
-    [SerializeField]
-    private AudioClip _explosionClip;
     #endregion Audio
+
+    [SerializeField]
+    private GameObject _explosionPrefab;
 
     #region Ammo
     [SerializeField]
@@ -311,9 +312,7 @@ public class Player : MonoBehaviour
 
             GameManager.Instance.GameOver();
 
-            // adding sound here when the play dies for some kind of feedback.
-            // would be even better if we had an explosion too.
-            _audioSource.PlayOneShot(_explosionClip);
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject, 1.0f);
         }
     }

@@ -2540,7 +2540,8 @@ MonoBehaviour:
   _score: 0
   _laserSoundClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _failedLaserClip: {fileID: 8300000, guid: 724131bc8a7f34041bb9f1701f0cb58d, type: 3}
-  _explosionClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _explosionPrefab: {fileID: 6576815195754949465, guid: 6c49feea16a924d32a0fa19063b74a3e,
+    type: 3}
   _maxAmmoCount: 15
   _replenishAmmoOnEnableMissiles: 0
   _maxThrusterValue: 60
